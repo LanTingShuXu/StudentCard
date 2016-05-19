@@ -332,8 +332,10 @@ public class CircleFragment extends Fragment implements View.OnClickListener {
 		// 获取当前用户信息
 		BmobAccount user = (BmobAccount) BmobAccount.getCurrentUser(
 				CircleFragment.this.getActivity(), BmobAccount.class);
-		tv_userCenterAccount.setText(user.getUsername());
-		tv_userCenterNick.setText(user.getNick());
+		if (user != null) {
+			tv_userCenterAccount.setText(user.getUsername());
+			tv_userCenterNick.setText(user.getNick());
+		}
 	}
 
 	// 初始化ListView
@@ -397,6 +399,7 @@ public class CircleFragment extends Fragment implements View.OnClickListener {
 			hideUserCenterOutAnimator();
 			switchUserActionImage(false);
 		} else {
+			initUserCenter();
 			startUserCenterInAnimator();
 			switchUserActionImage(true);
 		}
