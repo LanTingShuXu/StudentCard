@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/common_myBlue" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="我的一卡通"
+            android:textColor="@android:color/white" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/darker_gray" />
+    </RelativeLayout>
+
+    <!-- 账户以及余额信息 -->
+
+    <RelativeLayout
+        android:id="@+id/fragment_studentcard_layout_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_blue_light"
+            android:orientation="vertical"
+            android:padding="10dp" >
+
+            <TextView
+                android:id="@+id/fragment_studentcard_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="姓名获取失败"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/fragment_studentcard_bal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="当前余额：0.00"
+                android:textColor="@android:color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:contentDescription="@null"
+            android:src="@drawable/home_ic_forward" />
+    </RelativeLayout>
+
+    <com.github.pulltorefresh.library.PullToRefreshScrollView
+        xmlns:fresh="http://schemas.android.com/apk/res/com.swun.hl.studentcard"
+        android:id="@+id/fragment_studentCard_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        fresh:ptrMode="pullFromStart" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:alpha="0.5"
+                android:background="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/fragment_studentcard_costInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:drawableLeft="@drawable/fragment_studentcard_01"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/home_ic_forward"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="消费明细查询"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:alpha="0.5"
+                android:background="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/fragment_studentcard_transInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:drawableLeft="@drawable/fragment_studentcard_02"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/home_ic_forward"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="圈存明细查询"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:alpha="0.5"
+                android:background="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/fragment_studentcard_changePsw"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:drawableLeft="@drawable/fragment_studentcard_04"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/home_ic_forward"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="密码修改"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:alpha="0.5"
+                android:background="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/fragment_studentcard_reportLost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:drawableLeft="@drawable/fragment_studentcard_05"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/home_ic_forward"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="卡片挂失"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:alpha="0.5"
+                android:background="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/fragment_studentcard_queryElectric"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:drawableLeft="@drawable/fragment_studentcard_06"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/home_ic_forward"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="电费查询"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:alpha="0.5"
+                android:background="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/fragment_studentcard_aboutUs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:drawableLeft="@drawable/fragment_studentcard_03"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/home_ic_forward"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="关 于"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:alpha="0.5"
+                android:background="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/fragment_studentcard_exit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:drawableLeft="@drawable/fragment_student_card_exit"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/home_ic_forward"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="退 出"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:alpha="0.5"
+                android:background="@android:color/darker_gray" />
+        </LinearLayout>
+    </com.github.pulltorefresh.library.PullToRefreshScrollView>
+
+</LinearLayout>

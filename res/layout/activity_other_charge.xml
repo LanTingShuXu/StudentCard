@@ -1,0 +1,44 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.swun.hl.studentcard.ui.ReportLostActivity" >
+
+    <com.swun.hl.studentcard.myview.CustomTopBar
+        xmlns:topBar="http://schemas.android.com/apk/res/com.swun.hl.studentcard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        topBar:back_name="返回"
+        topBar:backenable="true"
+        topBar:title="其他缴费" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <WebView
+            android:id="@+id/aty_otherCharge_webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ProgressBar
+            android:id="@+id/aty_otherCharge_progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100" />
+
+        <TextView
+            android:id="@+id/aty_otherCharge_errorPage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:text="阿偶\n您的网络不给力哟~"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="20sp"
+            android:visibility="gone" />
+    </FrameLayout>
+
+</LinearLayout>

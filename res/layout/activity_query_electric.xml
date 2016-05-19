@@ -1,0 +1,45 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.swun.hl.studentcard.ui.QueryElectricActivity" >
+
+    <com.swun.hl.studentcard.myview.CustomTopBar
+        xmlns:topBar="http://schemas.android.com/apk/res/com.swun.hl.studentcard"
+        android:id="@+id/aty_queryElectric_topBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/common_myBlue"
+        topBar:backenable="true"
+        topBar:title="电费查询" />
+    
+    <FrameLayout
+        android:layout_below="@id/aty_queryElectric_topBar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <WebView
+            android:id="@+id/aty_queryElectric_webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ProgressBar
+            android:id="@+id/aty_queryElectric_progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100" />
+
+        <TextView
+            android:id="@+id/aty_queryElectric_errorPage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:text="阿偶\n服务器连接失败~"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="20sp"
+            android:visibility="gone" />
+    </FrameLayout>
+
+</RelativeLayout>

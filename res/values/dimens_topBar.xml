@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- topBar 自定义ActionBar -->
+    <dimen name="titleBar_imgv_titleLine">20dp</dimen>
+    <dimen name="titleBar_imgv_back">10dp</dimen>
+    <dimen name="titleBar_tv_backname">30dp</dimen>
+    <dimen name="titleBar_imgv_right">25dp</dimen>
+    <dimen name="titleBar_imgv_right_rightMagin">10dp</dimen>
+
+</resources>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.swun.hl.studentcard"
+    android:versionCode="3"
+    android:versionName="1.0.11" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="14" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+
+    <application
+        android:name=".MyApp"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+
+        <!-- 后台防止掉线的service对象 -->
+        <service android:name=".service.BackService" />
+
+        <!-- 登录界面 android:alwaysRetainTaskState="true"使Activity不会被清空栈 -->
+        <activity
+            android:name=".ui.LoginActivity"
+            android:alwaysRetainTaskState="true"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!-- 主界面 -->
+        <activity
+            android:name=".ui.HomeActivity"
+            android:screenOrientation="portrait" />
+        <!-- 学生信息界面 -->
+        <activity
+            android:name=".ui.StudentInfoActivity"
+            android:screenOrientation="portrait" />
+        <!-- 消费明细查询界面 -->
+        <activity
+            android:name=".ui.CostInfoActivity"
+            android:screenOrientation="portrait" />
+        <!-- 圈存明细查询界面 -->
+        <activity
+            android:name=".ui.TransInfoActivity"
+            android:screenOrientation="portrait" />
+        <!-- 修改密码界面 -->
+        <activity
+            android:name=".ui.ChangePasswordActivity"
+            android:screenOrientation="portrait" />
+        <!-- 卡片挂失界面 -->
+        <activity
+            android:name=".ui.ReportLostActivity"
+            android:screenOrientation="portrait" />
+        <!-- 其他缴费界面 -->
+        <activity
+            android:name=".ui.OtherChargeActivity"
+            android:screenOrientation="portrait" />
+        <!-- 电控缴费界面 -->
+        <activity
+            android:name=".ui.ElectricChargeActivity"
+            android:screenOrientation="portrait" />
+        <!-- 关于 界面 -->
+        <activity
+            android:name=".ui.AboutUsActivity"
+            android:screenOrientation="portrait" />
+        <!-- 编辑帖子界面 -->
+        <activity
+            android:name=".ui.InputPostActivity"
+            android:screenOrientation="portrait" />
+        <!-- Bmob自动更新界面 -->
+        <activity
+            android:name="cn.bmob.v3.update.UpdateDialogActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!-- 帖子详情界面 -->
+        <activity
+            android:name=".ui.PostInfoActivity"
+            android:screenOrientation="portrait" />
+        <!-- 查询电费界面 -->
+        <activity
+            android:name="com.swun.hl.studentcard.ui.QueryElectricActivity"
+            android:screenOrientation="portrait" />
+    </application>
+
+</manifest>

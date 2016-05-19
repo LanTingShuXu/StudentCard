@@ -1,0 +1,177 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.swun.hl.studentcard.ui.LoginActivity" >
+
+    <com.swun.hl.studentcard.myview.CustomTopBar
+        xmlns:topBar="http://schemas.android.com/apk/res/com.swun.hl.studentcard"
+        android:id="@+id/aty_login_topBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/common_myBlue"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        topBar:title="@string/app_name" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <!-- 顶部的logo -->
+
+        <ImageView
+            android:id="@+id/aty_login_login_logo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="@null"
+            android:paddingTop="10dp"
+            android:src="@drawable/login_logo" />
+
+        <!-- 账号框 -->
+
+        <LinearLayout
+            android:id="@+id/aty_login_account_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/aty_login_login_logo"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="学号：  "
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/aty_login_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_aty_login_edt_bg"
+                android:hint=""
+                android:inputType="number"
+                android:minEms="15"
+                android:padding="5dp"
+                android:singleLine="true"
+                android:text="" />
+        </LinearLayout>
+
+        <!-- 密码框 -->
+
+        <LinearLayout
+            android:id="@+id/aty_login_password_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/aty_login_account_layout"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="密码：  "
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/aty_login_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_aty_login_edt_bg"
+                android:hint=""
+                android:inputType="numberPassword"
+                android:minEms="15"
+                android:padding="5dp"
+                android:singleLine="true"
+                android:text="" />
+        </LinearLayout>
+
+        <!-- 输入验证码 -->
+
+        <LinearLayout
+            android:id="@+id/aty_login_checkCode_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/aty_login_password_layout"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp" >
+
+            <ImageView
+                android:id="@+id/aty_login_img_checkCode"
+                android:layout_width="115dp"
+                android:layout_height="45dp"
+                android:layout_margin="5dp"
+                android:background="@android:color/darker_gray"
+                android:contentDescription="@null"
+                android:scaleType="fitXY"
+                android:src="@drawable/aty_login_close" />
+
+            <EditText
+                android:id="@+id/aty_login_edt_checkCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_aty_login_edt_bg"
+                android:hint="输入左边的验证码"
+                android:inputType="textEmailAddress"
+                android:minEms="8"
+                android:padding="5dp"
+                android:singleLine="true" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/aty_login_checkCode_layout"
+            android:orientation="vertical"
+            android:padding="15dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:onClick="clk_queryElectric"
+                android:text="电费查询"
+                android:textColor="@android:color/holo_red_light"
+                android:textSize="16sp"
+                android:textStyle="italic" />
+
+            <View
+                android:layout_width="70dp"
+                android:layout_height="1px"
+                android:layout_gravity="center"
+                android:background="@android:color/holo_red_light" />
+
+            <TextView
+                android:id="@+id/aty_login_note"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="注意：\n\t1、如果验证码不显示，请尝试完全关闭应用再启动\n\t2、此软件为西南民族大学一卡通系统手机客户端，其他地方暂不支持。请谅解！" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="开发者：何玲" />
+        </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/selector_aty_login_btn"
+            android:onClick="clk_login"
+            android:text="提  交"
+            android:textColor="@android:color/white" />
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,60 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.swun.hl.studentcard.ui.InputPostActivity" >
+
+    <com.swun.hl.studentcard.myview.CustomTopBar
+        xmlns:topBar="http://schemas.android.com/apk/res/com.swun.hl.studentcard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        topBar:backenable="true"
+        topBar:title="发表帖子" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <EditText
+                android:id="@+id/aty_input_post_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/shape_aty_login_edt_bg"
+                android:hint="输入您的标题（必选）"
+                android:maxLines="3"
+                android:padding="10dp" />
+
+            <EditText
+                android:id="@+id/aty_input_post_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/shape_aty_login_edt_bg"
+                android:hint="输入您的内容（可选）"
+                android:maxLines="6"
+                android:minLines="3"
+                android:padding="10dp" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_margin="10dp"
+        android:background="@drawable/selector_aty_login_btn"
+        android:onClick="clk_post"
+        android:text="发 表"
+        android:textColor="@android:color/white" />
+
+</LinearLayout>

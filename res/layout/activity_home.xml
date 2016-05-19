@@ -1,0 +1,77 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:orientation="vertical"
+    tools:context="com.swun.hl.studentcard.ui.HomeActivity" >
+
+    <RelativeLayout
+        android:id="@+id/aty_home_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@android:color/holo_blue_light"
+        android:gravity="bottom"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/aty_home_studentcard"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:gravity="center"
+            android:onClick="clk_indicator"
+            android:text="一卡通"
+            android:textColor="@android:color/white" />
+
+        <!-- 格子 -->
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
+            android:alpha="0.5"
+            android:background="@android:color/white" />
+
+        <TextView
+            android:id="@+id/aty_home_charge"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:gravity="center"
+            android:onClick="clk_indicator"
+            android:text="缴费"
+            android:textColor="@android:color/white" />
+
+        <!-- 格子 -->
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
+            android:alpha="0.5"
+            android:background="@android:color/white" />
+
+        <TextView
+            android:id="@+id/aty_home_sns"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:gravity="center"
+            android:onClick="clk_indicator"
+            android:text="圈子"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,67 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.swun.hl.studentcard.ui.PostInfoActivity" >
+
+    <com.swun.hl.studentcard.myview.CustomTopBar
+        xmlns:topBar="http://schemas.android.com/apk/res/com.swun.hl.studentcard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/common_myBlue"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        topBar:back_name="返回"
+        topBar:backenable="true"
+        topBar:title="帖子详情" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <com.github.pulltorefresh.library.PullToRefreshListView
+            xmlns:fresh="http://schemas.android.com/apk/res/com.swun.hl.studentcard"
+            android:id="@+id/aty_post_info_listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:divider="@null"
+            android:overScrollMode="never"
+            android:paddingBottom="70dp"
+            fresh:ptrMode="both" >
+        </com.github.pulltorefresh.library.PullToRefreshListView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="3dp" >
+
+            <EditText
+                android:id="@+id/aty_post_info_comment"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/shape_aty_login_edt_bg"
+                android:hint="评论下吧"
+                android:maxLines="4" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/selector_aty_login_btn"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="clk_comment"
+                android:padding="7dp"
+                android:text="发 表"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>

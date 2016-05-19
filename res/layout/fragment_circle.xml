@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/common_myBlue" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="圈 子"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/fragment_circle_img_user"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="right|center_vertical"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:contentDescription="@null"
+            android:padding="7dp"
+            android:src="@drawable/fragment_circle_user_hide"
+            android:tint="@android:color/holo_red_dark" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/fragment_circle_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <com.github.pulltorefresh.library.PullToRefreshListView
+            xmlns:fresh="http://schemas.android.com/apk/res/com.swun.hl.studentcard"
+            android:id="@+id/fragment_circle_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            fresh:ptrMode="both" >
+        </com.github.pulltorefresh.library.PullToRefreshListView>
+
+        <ImageView
+            android:id="@+id/fragment_circle_input"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:background="@drawable/selector_fragment_circle_bg_input"
+            android:clickable="true"
+            android:contentDescription="@null"
+            android:scaleType="center"
+            android:src="@drawable/fragment_circle_ic_input" />
+
+        <include
+            android:id="@+id/fragment_circle_userCenter"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/include_fragment_circle_user_center"
+            android:visibility="gone" />
+    </FrameLayout>
+
+</LinearLayout>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="backenable" format="boolean"></attr>
+    <attr name="title" format="string"></attr>
+    <attr name="back_name" format="string"></attr>
+    <attr name="right_name" format="string"></attr>
+    <attr name="right_img" format="reference"></attr>
+
+    <declare-styleable name="CustomTopBar">
+        <attr name="title" />
+        <attr name="back_name" />
+        <attr name="backenable"></attr>
+        <attr name="right_name"></attr>
+        <attr name="right_img"></attr>
+    </declare-styleable>
+
+</resources>
