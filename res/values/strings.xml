@@ -16,5 +16,6 @@
     <string name="title_activity_input_post">InputPostActivity</string>
     <string name="title_activity_post_info">PostInfoActivity</string>
     <string name="title_activity_query_electric">QueryElectricActivity</string>
+    <string name="title_activity_feed_back">FeedBackActivity</string>
 
 </resources>

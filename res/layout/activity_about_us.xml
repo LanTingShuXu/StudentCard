@@ -8,17 +8,19 @@
 
     <com.swun.hl.studentcard.myview.CustomTopBar
         xmlns:topBar="http://schemas.android.com/apk/res/com.swun.hl.studentcard"
+        android:id="@+id/aty_aboutUs_topBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:focusable="true"
         android:focusableInTouchMode="true"
         app:backenable="true"
+        topBar:right_img="@drawable/aty_about_us_share"
         topBar:title="关于软件" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3"
+        android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical" >
 
@@ -40,7 +42,7 @@
             android:id="@+id/aty_aboutUs_version"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="版本：1.0"
+            android:text="版本："
             android:textColor="@android:color/darker_gray"
             android:textSize="12sp" />
 
@@ -48,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="微博：小玲子的太阳和月亮"
+            android:text="本人微博：小玲子的太阳和月亮"
             android:textColor="@android:color/darker_gray"
             android:textSize="12sp" />
     </LinearLayout>
@@ -56,15 +58,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:autoLink="web"
             android:padding="10dp"
-            android:text="申明：\n\t本软件为西南民大2012级学生“何玲”开发，毕设结束后，源码将归属于本校的“天码智联”团队,同时源码也将在github上公开，欢迎大家相互学习！"
+            android:text="申明：\n\t本软件为西南民大2012级学生开发\n· 项目源码github地址：https://github.com/LanTingShuXu/StudentCard\n · 软件官网:http://MinDaKaBao.bmob.cn\n欢迎大家相互学习！"
             android:textColor="@android:color/darker_gray"
             android:textSize="13sp" />
 
@@ -73,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
-            android:text="软件最终所属：天码智联团队"
+            android:text="技术支持：西南民大·天码智联团队"
             android:textSize="15sp" />
 
         <TextView

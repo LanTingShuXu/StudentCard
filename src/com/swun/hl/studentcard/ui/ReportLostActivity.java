@@ -3,6 +3,7 @@ package com.swun.hl.studentcard.ui;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 
@@ -22,6 +23,7 @@ public class ReportLostActivity extends Activity {
 	private WebView webView;
 	private ProgressBar progressBar;
 	private View errorPage;
+	private ViewGroup container;// °ü¹üWebViewºÍProgressBarµÄÈÝÆ÷
 
 	private WebViewHelper webViewHelper;
 
@@ -39,6 +41,13 @@ public class ReportLostActivity extends Activity {
 		Anim_BetweenActivity.leftIn_rightOut(this);
 	}
 
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		container.removeAllViews();
+		webView.destroy();
+	}
+
 	private void initWebView() {
 		webViewHelper = new WebViewHelper(this, webView, progressBar, errorPage);
 		webViewHelper.loadData(StudentCardClient.SERVER_REPORT_LOST,
@@ -51,5 +60,6 @@ public class ReportLostActivity extends Activity {
 		webView = (WebView) findViewById(R.id.aty_report_lost_webview);
 		progressBar = (ProgressBar) findViewById(R.id.aty_report_lost_progressBar);
 		errorPage = findViewById(R.id.aty_report_lost_errorPage);
+		container = (ViewGroup) findViewById(R.id.aty_report_lost_container);
 	}
 }

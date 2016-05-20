@@ -20,6 +20,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.BmobQuery.CachePolicy;
 import cn.bmob.v3.listener.DeleteListener;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
@@ -107,6 +108,7 @@ public class PostInfoActivity extends Activity {
 			deleteCommentSelected(item);
 			break;
 
+		// 点击的是复制消息
 		case R.id.aty_post_info_menu_copyComment:
 			copyCommentSelected(item);
 			break;
@@ -196,8 +198,8 @@ public class PostInfoActivity extends Activity {
 		final Toast t = Toast.makeText(this, "\n请求提交中..\n", Toast.LENGTH_SHORT);
 		t.setGravity(Gravity.CENTER, 0, 0);
 		t.show();
-		List<BmobComment> comments = adapter.getCommentsData();
-		BmobComment comment = comments.get(--position);
+		final List<BmobComment> comments = adapter.getCommentsData();
+		final BmobComment comment = comments.get(--position);
 		comment.delete(this, new DeleteListener() {
 
 			@Override
@@ -239,6 +241,7 @@ public class PostInfoActivity extends Activity {
 			skip = comments.size();
 		}
 		BmobQuery<BmobComment> query = new BmobQuery<BmobComment>();
+		query.setCachePolicy(CachePolicy.NETWORK_ELSE_CACHE);
 		query.addWhereEqualTo("post", post);
 		query.include("author");// 希望在查询帖子信息的同时也把发布人的信息查询出来
 		query.setLimit(30);// 一次性取30条数据

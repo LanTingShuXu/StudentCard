@@ -145,6 +145,20 @@ public class CircleFragment extends Fragment implements View.OnClickListener {
 	}
 
 	/**
+	 * 折叠UserCenter的界面
+	 * 
+	 * @return true表示折叠了UserCenter的界面
+	 */
+	public boolean collpaseUserCenter() {
+		if (view_userCenter.isShown()) {
+			img_userCenter.performClick();
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
 	 * 当选择的删除帖子选项的执行时间
 	 * 
 	 * @param item
@@ -157,7 +171,7 @@ public class CircleFragment extends Fragment implements View.OnClickListener {
 				Toast.LENGTH_SHORT);
 		t.setGravity(Gravity.CENTER, 0, 0);
 		t.show();
-		int index = minfo.position;
+		final int index = minfo.position - 1;
 		final BmobPost post = adapter.getData().get(index);
 		post.delete(getActivity(), new DeleteListener() {
 			@Override

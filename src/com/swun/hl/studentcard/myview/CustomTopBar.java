@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.swun.hl.studentcard.R;
 
-
 /**
  * 自定义标题栏
  * 
@@ -58,8 +57,6 @@ public class CustomTopBar extends RelativeLayout {
 	private Drawable rightDrawable;
 	private String right_name;
 
-	private RelativeLayout relativeLayout; // 被嵌套的RelativeLayout
-
 	private static final int ID_tv_title = 1000;
 	private static final int ID_tv_back = 1001;
 	private static final int ID_img_back = 1002;
@@ -75,7 +72,7 @@ public class CustomTopBar extends RelativeLayout {
 
 	public CustomTopBar(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		relativeLayout = new RelativeLayout(context);
+		setBackgroundResource(R.color.common_myBlue);
 
 		// 获取所有的属性
 		getAttr(context, attrs);
@@ -138,8 +135,6 @@ public class CustomTopBar extends RelativeLayout {
 
 		setBack();
 		setRight();
-		relativeLayout.setBackgroundColor(Color.TRANSPARENT);
-		addView(relativeLayout);
 
 	}
 
@@ -173,7 +168,7 @@ public class CustomTopBar extends RelativeLayout {
 				}
 			});
 
-			relativeLayout.addView(imgv_right, layoutParams);
+			addView(imgv_right, layoutParams);
 		} else if (right_name != null) {
 			tv_rightname.setText(right_name);
 			tv_rightname.setTextSize(16);
@@ -197,7 +192,7 @@ public class CustomTopBar extends RelativeLayout {
 				}
 			});
 
-			relativeLayout.addView(tv_rightname, layoutParams);
+			addView(tv_rightname, layoutParams);
 		}
 
 	}
@@ -216,7 +211,7 @@ public class CustomTopBar extends RelativeLayout {
 		lp2.topMargin = topMargin;
 		lp2.bottomMargin = topMargin;
 		lp2.addRule(RelativeLayout.BELOW, ID_tv_title);
-		relativeLayout.addView(imgv_titleLine, lp2);
+		addView(imgv_titleLine, lp2);
 
 		// 如果用户需要有返回按钮
 		if (back_enable) {
@@ -232,12 +227,13 @@ public class CustomTopBar extends RelativeLayout {
 			// lp3.leftMargin = leftMargin;
 			imgv_back.setPadding(leftMargin, 0, 0, 0);
 			lp3.addRule(RelativeLayout.CENTER_VERTICAL);
-			relativeLayout.addView(imgv_back, lp3);
+			addView(imgv_back, lp3);
 
 			// 为控件设置自定义的返回文字 tv_backname.setText(back_name);
 			tv_backname.setText(back_name);
 			tv_backname.setTextSize(16);
 			tv_backname.setId(ID_tv_back);
+			tv_backname.setTextColor(Color.WHITE);
 			// tv_backname.setBackgroundResource(R.drawable.selector_bg_topbar);
 			LayoutParams lp4 = new LayoutParams(LayoutParams.WRAP_CONTENT,
 					lp3.height);
@@ -247,7 +243,7 @@ public class CustomTopBar extends RelativeLayout {
 			lp4.addRule(RelativeLayout.CENTER_VERTICAL);
 			// 设置点击的监听器
 			// tv_backname.setOnClickListener(backClick);
-			relativeLayout.addView(tv_backname, lp4);
+			addView(tv_backname, lp4);
 		}
 
 	}
@@ -259,11 +255,12 @@ public class CustomTopBar extends RelativeLayout {
 		// 为控件设置自定义标题的内容
 		tv_title.setText(title);
 		tv_title.setTextSize(20);
+		tv_title.setTextColor(Color.WHITE);
 		tv_title.setId(ID_tv_title);
 		LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT,
 				LayoutParams.WRAP_CONTENT);
 		lp.addRule(RelativeLayout.CENTER_IN_PARENT, TRUE);
-		relativeLayout.addView(tv_title, lp);
+		addView(tv_title, lp);
 	}
 
 	/**
@@ -316,12 +313,14 @@ public class CustomTopBar extends RelativeLayout {
 				 */
 
 				activity.finish();
-				activity.overridePendingTransition(R.anim.between_activity_left_in,
+				activity.overridePendingTransition(
+						R.anim.between_activity_left_in,
 						R.anim.between_activity_right_out);
 			} else {
 				((Activity) getContext()).finish();
 				((Activity) getContext()).overridePendingTransition(
-						R.anim.between_activity_left_in, R.anim.between_activity_right_out);
+						R.anim.between_activity_left_in,
+						R.anim.between_activity_right_out);
 			}
 		}
 

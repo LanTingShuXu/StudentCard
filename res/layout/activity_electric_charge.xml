@@ -14,6 +14,7 @@
         topBar:title="电控缴费" />
 
     <FrameLayout
+        android:id="@+id/aty_electric_charge_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 

@@ -3,6 +3,7 @@ package com.swun.hl.studentcard.ui;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 
@@ -24,6 +25,7 @@ public class OtherChargeActivity extends Activity {
 	private ProgressBar progressBar;
 	private View errorPage;
 	private WebViewHelper webViewHelper;
+	private ViewGroup container;// °ü¹üWebViewºÍProgressBarµÄÈÝÆ÷
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,13 @@ public class OtherChargeActivity extends Activity {
 		Anim_BetweenActivity.leftIn_rightOut(this);
 	}
 
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		container.removeAllViews();
+		webView.destroy();
+	}
+
 	private void initWebView() {
 		webViewHelper = new WebViewHelper(this, webView, progressBar, errorPage);
 		webViewHelper.loadData(StudentCardClient.SERVER_OTHER_CHARGE,
@@ -51,5 +60,6 @@ public class OtherChargeActivity extends Activity {
 		webView = (WebView) findViewById(R.id.aty_otherCharge_webview);
 		progressBar = (ProgressBar) findViewById(R.id.aty_otherCharge_progressBar);
 		errorPage = findViewById(R.id.aty_otherCharge_errorPage);
+		container = (ViewGroup) findViewById(R.id.aty_otherCharge_container);
 	}
 }

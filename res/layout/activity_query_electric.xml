@@ -12,11 +12,12 @@
         android:background="@color/common_myBlue"
         topBar:backenable="true"
         topBar:title="电费查询" />
-    
+
     <FrameLayout
-        android:layout_below="@id/aty_queryElectric_topBar"
+        android:id="@+id/aty_query_electric_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:layout_below="@id/aty_queryElectric_topBar" >
 
         <WebView
             android:id="@+id/aty_queryElectric_webview"

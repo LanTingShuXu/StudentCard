@@ -40,6 +40,47 @@ public class HomeActivity extends Activity {
 		initService();
 	}
 
+	@Override
+	public void onBackPressed() {
+		// 如果是当前正在圈子界面，同时圈子界面的UserCenter是展开的，我们应该先折叠UserCenter界面
+		if (currentIndex == CIRCLE) {
+			CircleFragment circleFragment = (CircleFragment) contains[CIRCLE];
+			if (circleFragment.collpaseUserCenter()) {
+				return;
+			}
+		}
+		super.onBackPressed();
+	}
+
+	/**
+	 * 点击底部指示器的监听事件
+	 * 
+	 * @param v
+	 *            被点击的对象
+	 */
+	public void clk_indicator(View v) {
+		int index = 0;
+		switch (v.getId()) {
+		case R.id.aty_home_studentcard:// 一卡通
+			index = STUDENT_CARD;
+			break;
+		case R.id.aty_home_charge:// 缴费
+			index = CHARGE;
+			break;
+		case R.id.aty_home_sns:// 圈子
+			index = CIRCLE;
+			break;
+		}
+		// 如果点击的是当前Fragment
+		if (index == currentIndex) {
+			return;
+		}
+		currentIndex = index;
+		resetIndicator();
+		((TextView) v).setTextColor(Color.YELLOW);
+		setFragment(index);
+	}
+
 	/**
 	 * 启动后台服务
 	 */
@@ -110,32 +151,4 @@ public class HomeActivity extends Activity {
 		contains[index].onStart();// 调用该界面的onStart()方法
 	}
 
-	/**
-	 * 点击底部指示器的监听事件
-	 * 
-	 * @param v
-	 *            被点击的对象
-	 */
-	public void clk_indicator(View v) {
-		int index = 0;
-		switch (v.getId()) {
-		case R.id.aty_home_studentcard:// 一卡通
-			index = STUDENT_CARD;
-			break;
-		case R.id.aty_home_charge:// 缴费
-			index = CHARGE;
-			break;
-		case R.id.aty_home_sns:// 圈子
-			index = CIRCLE;
-			break;
-		}
-		// 如果点击的是当前Fragment
-		if (index == currentIndex) {
-			return;
-		}
-		currentIndex = index;
-		resetIndicator();
-		((TextView) v).setTextColor(Color.YELLOW);
-		setFragment(index);
-	}
 }

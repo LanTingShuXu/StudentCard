@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.swun.hl.studentcard"
-    android:versionCode="4"
-    android:versionName="1.0.2" >
+    android:versionCode="5"
+    android:versionName="1.0.2 beta" >
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -86,7 +86,11 @@
             android:screenOrientation="portrait" />
         <!-- 查询电费界面 -->
         <activity
-            android:name="com.swun.hl.studentcard.ui.QueryElectricActivity"
+            android:name=".ui.QueryElectricActivity"
+            android:screenOrientation="portrait" />
+        <!-- 用户反馈界面 -->
+        <activity
+            android:name="com.swun.hl.studentcard.ui.FeedBackActivity"
             android:screenOrientation="portrait" />
     </application>
 

@@ -25,6 +25,7 @@ import com.swun.hl.studentcard.client.StudentCardClient.StudentInfoCallback;
 import com.swun.hl.studentcard.ui.AboutUsActivity;
 import com.swun.hl.studentcard.ui.ChangePasswordActivity;
 import com.swun.hl.studentcard.ui.CostInfoActivity;
+import com.swun.hl.studentcard.ui.FeedBackActivity;
 import com.swun.hl.studentcard.ui.QueryElectricActivity;
 import com.swun.hl.studentcard.ui.ReportLostActivity;
 import com.swun.hl.studentcard.ui.StudentInfoActivity;
@@ -50,7 +51,7 @@ public class StudentcardFragment extends Fragment implements
 	private TextView tv_name, tv_bal;
 	private PullToRefreshScrollView pullToRefreshScrollView;
 	private View layout_info, tv_costInfo, tv_transInfo, tv_changePsw,
-			tv_reportLost, tv_aboutUs, tv_queryElectric, tv_exit;
+			tv_reportLost, tv_aboutUs, tv_queryElectric, tv_exit, tv_feedBack;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -96,6 +97,9 @@ public class StudentcardFragment extends Fragment implements
 		case R.id.fragment_studentcard_exit:// 点击退出
 			clk_exit(v);
 			break;
+		case R.id.fragment_studentcard_feedback:// 点击反馈
+			clk_feedBack(v);
+			break;
 
 		default:
 			break;
@@ -114,6 +118,16 @@ public class StudentcardFragment extends Fragment implements
 	 */
 	private void clk_queryElectric(View v) {
 		startActivity(new Intent(getActivity(), QueryElectricActivity.class));
+		Anim_BetweenActivity.leftOut_rightIn(getActivity());
+	}
+
+	/**
+	 * 点击反馈
+	 * 
+	 * @param v
+	 */
+	private void clk_feedBack(View v) {
+		startActivity(new Intent(getActivity(), FeedBackActivity.class));
 		Anim_BetweenActivity.leftOut_rightIn(getActivity());
 	}
 
@@ -218,6 +232,7 @@ public class StudentcardFragment extends Fragment implements
 		tv_queryElectric = v
 				.findViewById(R.id.fragment_studentcard_queryElectric);
 		tv_exit = v.findViewById(R.id.fragment_studentcard_exit);
+		tv_feedBack = v.findViewById(R.id.fragment_studentcard_feedback);
 		pullToRefreshScrollView = (PullToRefreshScrollView) v
 				.findViewById(R.id.fragment_studentCard_scroll);
 	}
@@ -235,6 +250,7 @@ public class StudentcardFragment extends Fragment implements
 		tv_queryElectric.setOnClickListener(this);
 		tv_exit.setOnClickListener(this);
 		pullToRefreshScrollView.setOnRefreshListener(this);
+		tv_feedBack.setOnClickListener(this);
 	}
 
 	/**

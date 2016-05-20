@@ -3,6 +3,7 @@ package com.swun.hl.studentcard.ui;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 
@@ -23,6 +24,7 @@ public class QueryElectricActivity extends Activity {
 	private WebView webView;
 	private ProgressBar progressBar;
 	private View errorPage;
+	private ViewGroup container;// °ü¹üWebViewºÍProgressBarµÄÈÝÆ÷
 
 	private WebViewHelper webViewHelper;
 
@@ -33,11 +35,18 @@ public class QueryElectricActivity extends Activity {
 		viewFind();
 		initWebView();
 	}
-	
+
 	@Override
 	public void onBackPressed() {
 		finish();
 		Anim_BetweenActivity.leftIn_rightOut(this);
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		container.removeAllViews();
+		webView.destroy();
 	}
 
 	private void initWebView() {
@@ -52,5 +61,6 @@ public class QueryElectricActivity extends Activity {
 		webView = (WebView) findViewById(R.id.aty_queryElectric_webview);
 		progressBar = (ProgressBar) findViewById(R.id.aty_queryElectric_progressBar);
 		errorPage = findViewById(R.id.aty_queryElectric_errorPage);
+		container = (ViewGroup) findViewById(R.id.aty_query_electric_container);
 	}
 }
