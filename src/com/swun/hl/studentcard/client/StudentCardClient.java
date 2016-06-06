@@ -117,7 +117,7 @@ public class StudentCardClient {
 	/**
 	 * 一卡通服务端IP地址
 	 */
-	public static final String SERVER_IP_ADDRESS = "https://218.194.85.250/";
+	public static final String SERVER_IP_ADDRESS = "https://218.194.85.250";
 	/**
 	 * 一卡通登录界面地址
 	 */
@@ -297,6 +297,12 @@ public class StudentCardClient {
 					// 获取登录结果信息
 					String s = readServerData(response.getEntity().getContent());
 					isLogin();// 判断是否已经登录
+					// 再次发起请求
+					response = httpClient.execute(post);
+					// 再次获取登录结果信息
+					s = readServerData(response.getEntity().getContent());
+					isLogin();// 判断是否已经登录
+
 					Looper.prepare();
 					if (callback != null) {
 						String info = "";
@@ -341,11 +347,38 @@ public class StudentCardClient {
 					str_cookie = str_setCookie.substring(
 							str_setCookie.indexOf("=") + 1,
 							str_setCookie.indexOf(";"));
-
 					// ----------获取当前会话的验证码图片---------
 					get = new HttpGet(SERVER_LOGIN_CHECK_CODE);
 					addHeaderInfos(get);// 填写消息头
 					response = httpClient.execute(get);// 发起获取验证码请求
+					// 下载验证码
+					downloadCheckCodeImage(handler, imgview, response
+							.getEntity().getContent());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			};
+
+		}.start();
+	}
+
+	/**
+	 * 再次获取验证码图片（一般是验证码填写错误导致）
+	 * 
+	 * @param handler
+	 *            主线程的Handler
+	 * @param imgview
+	 *            需要显示图片的ImageView
+	 */
+	public void reGetCheckCodeImage(final Handler handler,
+			final ImageView imgview) {
+		new Thread() {
+			public void run() {
+				try {
+					// ----------获取当前会话的验证码图片---------
+					HttpGet get = new HttpGet(SERVER_LOGIN_CHECK_CODE);
+					addHeaderInfos(get);// 填写消息头
+					HttpResponse response = httpClient.execute(get);// 发起获取验证码请求
 					// 下载验证码
 					downloadCheckCodeImage(handler, imgview, response
 							.getEntity().getContent());
@@ -906,8 +939,6 @@ public class StudentCardClient {
 		request.addHeader("Accept-Encoding", "gzip, deflate, sdch");
 		request.addHeader("Accept-Language", "zh-CN,zh;q=0.8,en;q=0.6");
 		request.addHeader("Connection", "keep-alive");
-		request.addHeader("Cache-Control", "max-age=0");
-		request.addHeader("Content-Type", "application/x-www-form-urlencoded");
 		request.addHeader("Upgrade-Insecure-Requests", "1");
 		request.addHeader(
 				"User-Agent",

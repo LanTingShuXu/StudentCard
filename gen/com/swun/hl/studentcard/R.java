@@ -262,23 +262,24 @@ containing a value of this type.
         public static final int include_fragment_user_center_editable=0x7f020027;
         public static final int include_fragment_user_center_up=0x7f020028;
         public static final int include_user_center_under_line=0x7f020029;
-        public static final int line_title=0x7f02002a;
-        public static final int login_logo=0x7f02002b;
-        public static final int pullrefresh_default_ptr_flip=0x7f02002c;
-        public static final int pullrefresh_default_ptr_rotate=0x7f02002d;
-        public static final int pullrefresh_indicator_arrow=0x7f02002e;
-        public static final int pullrefresh_indicator_bg_bottom=0x7f02002f;
-        public static final int pullrefresh_indicator_bg_top=0x7f020030;
-        public static final int selector_aty_login_btn=0x7f020031;
-        public static final int selector_bg_topbar=0x7f020032;
-        public static final int selector_fragmen_charge_electry_charge=0x7f020033;
-        public static final int selector_fragmen_charge_netcharge=0x7f020034;
-        public static final int selector_fragmen_charge_other_charge=0x7f020035;
-        public static final int selector_fragment_circle_bg_input=0x7f020036;
-        public static final int shape_aty_change_psw_msg=0x7f020037;
-        public static final int shape_aty_cost_info_line=0x7f020038;
-        public static final int shape_aty_login_edt_bg=0x7f020039;
-        public static final int shape_aty_post_info_circle=0x7f02003a;
+        public static final int layout_declare_close=0x7f02002a;
+        public static final int line_title=0x7f02002b;
+        public static final int login_logo=0x7f02002c;
+        public static final int pullrefresh_default_ptr_flip=0x7f02002d;
+        public static final int pullrefresh_default_ptr_rotate=0x7f02002e;
+        public static final int pullrefresh_indicator_arrow=0x7f02002f;
+        public static final int pullrefresh_indicator_bg_bottom=0x7f020030;
+        public static final int pullrefresh_indicator_bg_top=0x7f020031;
+        public static final int selector_aty_login_btn=0x7f020032;
+        public static final int selector_bg_topbar=0x7f020033;
+        public static final int selector_fragmen_charge_electry_charge=0x7f020034;
+        public static final int selector_fragmen_charge_netcharge=0x7f020035;
+        public static final int selector_fragmen_charge_other_charge=0x7f020036;
+        public static final int selector_fragment_circle_bg_input=0x7f020037;
+        public static final int shape_aty_change_psw_msg=0x7f020038;
+        public static final int shape_aty_cost_info_line=0x7f020039;
+        public static final int shape_aty_login_edt_bg=0x7f02003a;
+        public static final int shape_aty_post_info_circle=0x7f02003b;
     }
     public static final class id {
         public static final int aty_aboutUs_topBar=0x7f08000c;
@@ -319,8 +320,8 @@ containing a value of this type.
         public static final int aty_otherCharge_webview=0x7f08002d;
         public static final int aty_post_info_comment=0x7f080031;
         public static final int aty_post_info_listView=0x7f080030;
-        public static final int aty_post_info_menu_copyComment=0x7f080085;
-        public static final int aty_post_info_menu_deleteComment=0x7f080084;
+        public static final int aty_post_info_menu_copyComment=0x7f080086;
+        public static final int aty_post_info_menu_deleteComment=0x7f080085;
         public static final int aty_queryElectric_errorPage=0x7f080036;
         public static final int aty_queryElectric_progressBar=0x7f080035;
         public static final int aty_queryElectric_topBar=0x7f080032;
@@ -357,7 +358,7 @@ containing a value of this type.
         public static final int bmob_update_wifi_indicator=0x7f08004d;
         public static final int both=0x7f080003;
         public static final int disabled=0x7f080004;
-        public static final int fl_inner=0x7f08007f;
+        public static final int fl_inner=0x7f080080;
         public static final int flip=0x7f08000a;
         public static final int fragment_charge_electryCharge=0x7f080057;
         public static final int fragment_charge_money=0x7f080056;
@@ -365,7 +366,7 @@ containing a value of this type.
         public static final int fragment_charge_netCharge2=0x7f080055;
         public static final int fragment_charge_otherCharge=0x7f080058;
         public static final int fragment_circle_content=0x7f08005a;
-        public static final int fragment_circle_context_menu_delete=0x7f080086;
+        public static final int fragment_circle_context_menu_delete=0x7f080087;
         public static final int fragment_circle_img_user=0x7f080059;
         public static final int fragment_circle_input=0x7f08005c;
         public static final int fragment_circle_list=0x7f08005b;
@@ -404,15 +405,16 @@ containing a value of this type.
         public static final int item_transInfo_department=0x7f08007d;
         public static final int item_transInfo_money=0x7f08007c;
         public static final int item_transInfo_time=0x7f08007e;
+        public static final int layout_login_declare_content=0x7f08007f;
         public static final int manualOnly=0x7f080005;
         public static final int pullDownFromTop=0x7f080006;
         public static final int pullFromEnd=0x7f080007;
         public static final int pullFromStart=0x7f080008;
         public static final int pullUpFromBottom=0x7f080009;
-        public static final int pull_to_refresh_image=0x7f080080;
-        public static final int pull_to_refresh_progress=0x7f080081;
-        public static final int pull_to_refresh_sub_text=0x7f080083;
-        public static final int pull_to_refresh_text=0x7f080082;
+        public static final int pull_to_refresh_image=0x7f080081;
+        public static final int pull_to_refresh_progress=0x7f080082;
+        public static final int pull_to_refresh_sub_text=0x7f080084;
+        public static final int pull_to_refresh_text=0x7f080083;
         public static final int rotate=0x7f08000b;
         public static final int scrollview=0x7f080002;
         public static final int webview=0x7f080001;
@@ -441,8 +443,9 @@ containing a value of this type.
         public static final int item_cirle_post=0x7f030014;
         public static final int item_cost_info=0x7f030015;
         public static final int item_trans_info=0x7f030016;
-        public static final int pull_to_refresh_header_horizontal=0x7f030017;
-        public static final int pull_to_refresh_header_vertical=0x7f030018;
+        public static final int layout_login_declare=0x7f030017;
+        public static final int pull_to_refresh_header_horizontal=0x7f030018;
+        public static final int pull_to_refresh_header_vertical=0x7f030019;
     }
     public static final class menu {
         public static final int aty_post_info_menu=0x7f0a0000;

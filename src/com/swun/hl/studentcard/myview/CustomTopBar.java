@@ -172,6 +172,7 @@ public class CustomTopBar extends RelativeLayout {
 		} else if (right_name != null) {
 			tv_rightname.setText(right_name);
 			tv_rightname.setTextSize(16);
+			tv_rightname.setTextColor(Color.WHITE);
 			tv_rightname.setClickable(true);
 			LayoutParams layoutParams = new LayoutParams(
 					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);

@@ -18,6 +18,8 @@ public class SharedPreferenceHelper {
 	private final String fileName = "preferenceHelper";
 	// 记录最近的账户名的key
 	private final String recentAccount = "recentAccount";
+	// 申明的版本号
+	private final String declareVersionCode = "declareVersionCode";
 
 	/**
 	 * 单例模式
@@ -66,6 +68,26 @@ public class SharedPreferenceHelper {
 	 */
 	public String getRecenetAccountName() {
 		return sharedPreferences.getString(recentAccount, "");
+	}
+
+	/**
+	 * 设置“申明”的版本号
+	 * 
+	 * @param versionCode
+	 *            版本号
+	 */
+	public void setDeclareVersionCode(int versionCode) {
+		editor.putInt(declareVersionCode, versionCode);
+		editor.commit();
+	}
+
+	/**
+	 * 获取“申明”的版本号
+	 * 
+	 * @return 如果之前不存在，返回-1
+	 */
+	public int getDeclareVersionCode() {
+		return sharedPreferences.getInt(declareVersionCode, -1);
 	}
 
 }

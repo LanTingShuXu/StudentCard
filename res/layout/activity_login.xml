@@ -13,6 +13,7 @@
         android:background="@color/common_myBlue"
         android:focusable="true"
         android:focusableInTouchMode="true"
+        topBar:right_name="反 馈"
         topBar:title="@string/app_name" />
 
     <RelativeLayout

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#88000000"
+    android:orientation="vertical" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="50dp"
+        android:background="@android:color/white" >
+
+        <TextView
+            android:id="@+id/layout_login_declare_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autoLink="all"
+            android:padding="10dp"
+            android:text="尊敬的用户您好：\n\t我们做了些决定......" />
+    </ScrollView>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_margin="30dp"
+        android:contentDescription="@null"
+        android:onClick="clk_layoutDeclareClose"
+        android:padding="5dp"
+        android:src="@drawable/layout_declare_close" />
+
+</FrameLayout>

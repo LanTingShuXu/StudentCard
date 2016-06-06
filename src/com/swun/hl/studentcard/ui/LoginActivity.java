@@ -1,5 +1,7 @@
 package com.swun.hl.studentcard.ui;
 
+import java.util.List;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -8,20 +10,28 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
+import android.text.Html;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.update.BmobUpdateAgent;
 
 import com.swun.hl.studentcard.R;
 import com.swun.hl.studentcard.bmobBean.BmobAccount;
+import com.swun.hl.studentcard.bmobBean.BmobDeclare;
 import com.swun.hl.studentcard.cache.SharedPreferenceHelper;
 import com.swun.hl.studentcard.client.StudentCardClient;
 import com.swun.hl.studentcard.client.StudentCardClient.CommonCallback;
+import com.swun.hl.studentcard.myview.CustomTopBar;
+import com.swun.hl.studentcard.myview.CustomTopBar.callBackListener;
 import com.swun.hl.studentcard.service.BackService;
 import com.swun.hl.studentcard.utils.AlertDialogHelper;
 import com.swun.hl.studentcard.utils.Anim_BetweenActivity;
@@ -35,12 +45,19 @@ import com.swun.hl.studentcard.utils.Anim_BetweenActivity;
  */
 public class LoginActivity extends Activity {
 
+	private CustomTopBar topBar;
 	private ImageView img_checkCode;// 验证码图片
 	private EditText edt_checkCode;// 输入验证码的输入框
 	private EditText edt_account;// 账号输入框
 	private EditText edt_password;// 密码输入框
 	private StudentCardClient studentCardClient;// 学生一卡通客户端类
 	private Handler handler = new Handler();
+
+	// “申明”对象
+	private BmobDeclare declare;
+	// true表示“申明”界面正显示
+	private boolean declareViewShowing = false;
+
 	// 集中管理SharedPreference的帮助类
 	private SharedPreferenceHelper preferenceHelper;
 
@@ -58,6 +75,10 @@ public class LoginActivity extends Activity {
 
 	@Override
 	public void onBackPressed() {
+		// 如果正在显示申明界面，我们不响应返回事件
+		if (declareViewShowing) {
+			return;
+		}
 		AlertDialog.Builder builder = new Builder(this);
 		builder.setTitle("提示").setMessage("\n您要退出软件吗？\n")
 				.setPositiveButton("确定", new OnClickListener() {
@@ -85,11 +106,73 @@ public class LoginActivity extends Activity {
 		Anim_BetweenActivity.leftOut_rightIn(this);
 	}
 
+	/**
+	 * 点击“申明”的关闭按钮
+	 * 
+	 * @param v
+	 */
+	public void clk_layoutDeclareClose(View v) {
+		if (declare != null) {
+			preferenceHelper.setDeclareVersionCode(declare.getVersionCode());
+		}
+		ViewGroup parent = (ViewGroup) getWindow().getDecorView();
+		parent.removeViewAt(1);
+		declareViewShowing = false;
+
+	}
+
 	private void viewFind() {
 		img_checkCode = (ImageView) findViewById(R.id.aty_login_img_checkCode);
 		edt_checkCode = (EditText) findViewById(R.id.aty_login_edt_checkCode);
 		edt_account = (EditText) findViewById(R.id.aty_login_account);
 		edt_password = (EditText) findViewById(R.id.aty_login_password);
+		topBar = (CustomTopBar) findViewById(R.id.aty_login_topBar);
+	}
+
+	/**
+	 * 查询服务端是否有申明信息
+	 */
+	private void checkDeclare() {
+		BmobQuery<BmobDeclare> query = new BmobQuery<BmobDeclare>();
+		query.addWhereGreaterThanOrEqualTo("versionCode", 0);
+		query.order("-updatedAt");// 按照时间降序
+		query.findObjects(this, new FindListener<BmobDeclare>() {
+			@Override
+			public void onSuccess(List<BmobDeclare> bmobDeclares) {
+
+				if (bmobDeclares != null && bmobDeclares.size() > 0) {
+					declare = bmobDeclares.get(0);
+					if (preferenceHelper.getDeclareVersionCode() != declare
+							.getVersionCode()) {
+						declareViewShowing = true;
+						showDeclareView();
+					}
+				}
+			}
+
+			@Override
+			public void onError(int arg0, String arg1) {
+
+			}
+		});
+	}
+
+	/**
+	 * 显示申明界面
+	 */
+	private void showDeclareView() {
+		ViewGroup parent = (ViewGroup) getWindow().getDecorView();
+		View v = LayoutInflater.from(this).inflate(
+				R.layout.layout_login_declare, parent, false);
+		TextView tv_declare = (TextView) v
+				.findViewById(R.id.layout_login_declare_content);
+		if (declare != null) {
+			// 设置申明
+			tv_declare.setText(Html.fromHtml(declare.getContent()));
+		} else {
+			declareViewShowing = false;
+		}
+		parent.addView(v, 1);
 	}
 
 	/**
@@ -112,11 +195,33 @@ public class LoginActivity extends Activity {
 	 * 初始化操作
 	 */
 	private void init() {
+		initListener();
 		BmobUpdateAgent.update(this);// 检查更新
 		preferenceHelper = SharedPreferenceHelper.getInstance(this);
 		studentCardClient = StudentCardClient.getInstance(this);
 		edt_account.setText(preferenceHelper.getRecenetAccountName());
 		studentCardClient.getCheckCodeImage(handler, img_checkCode);
+		checkDeclare();
+	}
+
+	/**
+	 * 初始化监听器
+	 */
+	private void initListener() {
+		topBar.setCallBackListener(new callBackListener() {
+
+			@Override
+			public void rightClick(View view) {
+				LoginActivity.this.startActivity(new Intent(LoginActivity.this,
+						FeedBackActivity.class));
+				Anim_BetweenActivity.leftOut_rightIn(LoginActivity.this);
+			}
+
+			@Override
+			public void leftClick(View view) {
+
+			}
+		});
 	}
 
 	/**
@@ -173,7 +278,7 @@ public class LoginActivity extends Activity {
 							AlertDialogHelper.showCommonDialog(
 									LoginActivity.this, info);
 							// 重新获取数据
-							studentCardClient.getCheckCodeImage(handler,
+							studentCardClient.reGetCheckCodeImage(handler,
 									img_checkCode);
 						}
 					}
@@ -223,14 +328,15 @@ public class LoginActivity extends Activity {
 	 */
 	private void loginBmob(BmobAccount user) {
 		user.login(this, new SaveListener() {
+
 			@Override
 			public void onSuccess() {
-				Log.i("lcj", "登录成功");
+
 			}
 
 			@Override
 			public void onFailure(int arg0, String arg1) {
-				Log.i("lcj", "登录失败：" + arg1);
+
 			}
 		});
 	}
