@@ -118,6 +118,7 @@ public class StudentCardClient {
 	 * 一卡通服务端IP地址
 	 */
 	public static final String SERVER_IP_ADDRESS = "https://218.194.85.250";
+
 	/**
 	 * 一卡通登录界面地址
 	 */
@@ -281,8 +282,7 @@ public class StudentCardClient {
 		new Thread() {
 			public void run() {
 				try {
-					HttpPost post = new HttpPost(SERVER_LOGIN_FORM_POST
-							+ ";jsessionid=" + str_cookie);
+					HttpPost post = new HttpPost(SERVER_LOGIN_FORM_POST);
 					addHeaderInfos(post);// 添加常用的请求头信息
 
 					// 添加请求参数
@@ -296,11 +296,6 @@ public class StudentCardClient {
 					HttpResponse response = httpClient.execute(post);
 					// 获取登录结果信息
 					String s = readServerData(response.getEntity().getContent());
-					isLogin();// 判断是否已经登录
-					// 再次发起请求
-					response = httpClient.execute(post);
-					// 再次获取登录结果信息
-					s = readServerData(response.getEntity().getContent());
 					isLogin();// 判断是否已经登录
 
 					Looper.prepare();
@@ -339,7 +334,6 @@ public class StudentCardClient {
 				try {
 					HttpGet get = new HttpGet(SERVER_LOGIN_PAGE);// 请求登录界面，获取Cookie
 					str_cookie = "";
-					addHeaderInfos(get);// 填写消息头
 					HttpResponse response = httpClient.execute(get);// 发起请求
 					Header header = response.getFirstHeader("Set-Cookie");// 获取Cookie头信息
 					str_setCookie = header.getValue();// 获取cookie的值
@@ -354,6 +348,8 @@ public class StudentCardClient {
 					// 下载验证码
 					downloadCheckCodeImage(handler, imgview, response
 							.getEntity().getContent());
+					isLogin();// 判断是否已经登录
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -934,15 +930,17 @@ public class StudentCardClient {
 	 */
 	private void addHeaderInfos(HttpUriRequest request) {
 		// 填写消息头
-		request.addHeader("Accept",
-				"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-		request.addHeader("Accept-Encoding", "gzip, deflate, sdch");
-		request.addHeader("Accept-Language", "zh-CN,zh;q=0.8,en;q=0.6");
-		request.addHeader("Connection", "keep-alive");
-		request.addHeader("Upgrade-Insecure-Requests", "1");
-		request.addHeader(
-				"User-Agent",
-				"Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36");
+		// request.addHeader("Accept",
+		// "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+		// request.addHeader("Accept-Encoding", "gzip, deflate, sdch");
+		// request.addHeader("Accept-Language", "zh-CN,zh;q=0.8,en;q=0.6");
+		// request.addHeader("Connection", "keep-alive");
+		// request.addHeader("Upgrade-Insecure-Requests", "1");
+		// request.addHeader("Host", "218.194.85.250");
+		// request.addHeader("Referer", "https://218.194.85.250/ExpressWeb/");
+		// request.addHeader(
+		// "User-Agent",
+		// "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36");
 		request.addHeader("Cookie", "JSESSIONID=" + str_cookie);// 添加Cookie信息
 	}
 
@@ -1014,8 +1012,10 @@ public class StudentCardClient {
 			handler.post(new Runnable() {
 				@Override
 				public void run() {
-					imgview.setImageBitmap(BitmapFactory.decodeByteArray(
-							bao.toByteArray(), 0, bao.size()));
+					if (imgview != null) {
+						imgview.setImageBitmap(BitmapFactory.decodeByteArray(
+								bao.toByteArray(), 0, bao.size()));
+					}
 				}
 			});
 			bao.close();// 关闭流
