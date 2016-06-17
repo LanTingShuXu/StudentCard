@@ -39,7 +39,7 @@ public class HomeActivity extends Activity {
 		initFragment();
 		initService();
 	}
-
+	
 	@Override
 	public void onBackPressed() {
 		// 如果是当前正在圈子界面，同时圈子界面的UserCenter是展开的，我们应该先折叠UserCenter界面

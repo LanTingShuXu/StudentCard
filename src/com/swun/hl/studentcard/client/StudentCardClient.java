@@ -243,7 +243,7 @@ public class StudentCardClient {
 	/**
 	 * 存储当前会话的cookie值
 	 */
-	public static String str_cookie;
+	public static String str_cookie = "";
 	/**
 	 * 消息头 setcookie的值
 	 */
@@ -333,14 +333,8 @@ public class StudentCardClient {
 			public void run() {
 				try {
 					HttpGet get = new HttpGet(SERVER_LOGIN_PAGE);// 请求登录界面，获取Cookie
-					str_cookie = "";
 					HttpResponse response = httpClient.execute(get);// 发起请求
-					Header header = response.getFirstHeader("Set-Cookie");// 获取Cookie头信息
-					str_setCookie = header.getValue();// 获取cookie的值
-					// 提取真正的jsessionid号
-					str_cookie = str_setCookie.substring(
-							str_setCookie.indexOf("=") + 1,
-							str_setCookie.indexOf(";"));
+					getCookieInfo(response);
 					// ----------获取当前会话的验证码图片---------
 					get = new HttpGet(SERVER_LOGIN_CHECK_CODE);
 					addHeaderInfos(get);// 填写消息头
@@ -350,34 +344,6 @@ public class StudentCardClient {
 							.getEntity().getContent());
 					isLogin();// 判断是否已经登录
 
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			};
-
-		}.start();
-	}
-
-	/**
-	 * 再次获取验证码图片（一般是验证码填写错误导致）
-	 * 
-	 * @param handler
-	 *            主线程的Handler
-	 * @param imgview
-	 *            需要显示图片的ImageView
-	 */
-	public void reGetCheckCodeImage(final Handler handler,
-			final ImageView imgview) {
-		new Thread() {
-			public void run() {
-				try {
-					// ----------获取当前会话的验证码图片---------
-					HttpGet get = new HttpGet(SERVER_LOGIN_CHECK_CODE);
-					addHeaderInfos(get);// 填写消息头
-					HttpResponse response = httpClient.execute(get);// 发起获取验证码请求
-					// 下载验证码
-					downloadCheckCodeImage(handler, imgview, response
-							.getEntity().getContent());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -930,18 +896,42 @@ public class StudentCardClient {
 	 */
 	private void addHeaderInfos(HttpUriRequest request) {
 		// 填写消息头
-		// request.addHeader("Accept",
-		// "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-		// request.addHeader("Accept-Encoding", "gzip, deflate, sdch");
-		// request.addHeader("Accept-Language", "zh-CN,zh;q=0.8,en;q=0.6");
-		// request.addHeader("Connection", "keep-alive");
-		// request.addHeader("Upgrade-Insecure-Requests", "1");
-		// request.addHeader("Host", "218.194.85.250");
-		// request.addHeader("Referer", "https://218.194.85.250/ExpressWeb/");
+		request.addHeader("Accept",
+				"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+		request.addHeader("Accept-Encoding", "gzip, deflate, sdch");
+		request.addHeader("Accept-Language", "zh-CN,zh;q=0.8,en;q=0.6");
+		request.addHeader("Connection", "keep-alive");
+		request.addHeader("Upgrade-Insecure-Requests", "1");
+		request.addHeader("Host", "218.194.85.250");
+		request.addHeader("Referer", "https://218.194.85.250/ExpressWeb/");
 		// request.addHeader(
 		// "User-Agent",
 		// "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36");
+		request.addHeader(
+				"User-Agent",
+				"Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2");
 		request.addHeader("Cookie", "JSESSIONID=" + str_cookie);// 添加Cookie信息
+	}
+
+	/**
+	 * 获取cookie信息
+	 * 
+	 * @param response
+	 *            服务端返回的数据
+	 */
+	private void getCookieInfo(HttpResponse response) {
+		Header[] headers = response.getHeaders("Set-Cookie");
+		for (Header h : headers) {
+			String cookie = h.getValue();
+			if (cookie.contains("JSESSIONID")) {
+				// 提取真正的jsessionid号
+				str_setCookie = h.getValue();// 获取cookie的值
+				str_cookie += cookie.substring(str_setCookie.indexOf("=") + 1,
+						str_setCookie.indexOf(";"));
+			} else {
+				str_cookie += "; " + cookie;
+			}
+		}
 	}
 
 	/**

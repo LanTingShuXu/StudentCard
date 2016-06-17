@@ -278,7 +278,7 @@ public class LoginActivity extends Activity {
 							AlertDialogHelper.showCommonDialog(
 									LoginActivity.this, info);
 							// 重新获取数据
-							studentCardClient.reGetCheckCodeImage(handler,
+							studentCardClient.getCheckCodeImage(handler,
 									img_checkCode);
 						}
 					}
