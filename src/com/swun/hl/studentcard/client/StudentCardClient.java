@@ -21,6 +21,11 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
+import org.mozilla.javascript.Function;
+import org.mozilla.javascript.NativeJavaObject;
+import org.mozilla.javascript.NativeObject;
+import org.mozilla.javascript.Scriptable;
+import org.mozilla.javascript.ScriptableObject;
 
 import android.content.Context;
 import android.graphics.BitmapFactory;
@@ -136,6 +141,12 @@ public class StudentCardClient {
 	 */
 	private static final String SERVER_LOGIN_FORM_POST = SERVER_LOGIN_PAGE
 			+ "/login.action";
+
+	/**
+	 * 登录界面js代码地址
+	 */
+	private static final String SERVER_LOGIN_lOGIN_JS = SERVER_LOGIN_PAGE
+			+ "/js/login.js";
 
 	/**
 	 * 判断是否已经登录。如果已经登录将会返回true
@@ -284,11 +295,14 @@ public class StudentCardClient {
 				try {
 					HttpPost post = new HttpPost(SERVER_LOGIN_FORM_POST);
 					addHeaderInfos(post);// 添加常用的请求头信息
+					// 加密密码
+					String psd = runScript(readLogin_js(), "lyf",
+							new String[] { password });
 
 					// 添加请求参数
 					List<NameValuePair> params = new ArrayList<NameValuePair>();
 					params.add(new BasicNameValuePair("username", studentCard));
-					params.add(new BasicNameValuePair("password", password));
+					params.add(new BasicNameValuePair("password", psd));
 					params.add(new BasicNameValuePair("checkCode", checkCode));
 					post.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
 
@@ -889,6 +903,67 @@ public class StudentCardClient {
 	// 单例模式私有化构造函数
 	private StudentCardClient(Context context) {
 		this.context = context;
+	}
+
+	// 读取js代码
+	private String readLogin_js() {
+		String js = "";
+		HttpGet get = new HttpGet(SERVER_LOGIN_lOGIN_JS);
+		try {
+			HttpResponse response = httpClient.execute(get);
+			if (responseIsRight(response)) {
+				js = readServerData(response.getEntity().getContent());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return js;
+	}
+
+	/**
+	 * 执行JS
+	 * 
+	 * @param js
+	 *            js代码
+	 * @param functionName
+	 *            js方法名称
+	 * @param functionParams
+	 *            js方法参数
+	 * @return
+	 */
+	private String runScript(String js, String functionName,
+			Object[] functionParams) {
+		org.mozilla.javascript.Context rhino = org.mozilla.javascript.Context
+				.enter();
+		rhino.setOptimizationLevel(-1);
+		try {
+			Scriptable scope = rhino.initStandardObjects();
+
+			ScriptableObject.putProperty(scope, "javaContext",
+					org.mozilla.javascript.Context.javaToJS(client, scope));
+			ScriptableObject.putProperty(scope, "javaLoader",
+					org.mozilla.javascript.Context.javaToJS(
+							StudentCardClient.class.getClassLoader(), scope));
+
+			rhino.evaluateString(scope, js, "MainActivity", 1, null);
+
+			Function function = (Function) scope.get(functionName, scope);
+
+			Object result = function.call(rhino, scope, scope, functionParams);
+			if (result instanceof String) {
+				return (String) result;
+			} else if (result instanceof NativeJavaObject) {
+				return (String) ((NativeJavaObject) result)
+						.getDefaultValue(String.class);
+			} else if (result instanceof NativeObject) {
+				return (String) ((NativeObject) result)
+						.getDefaultValue(String.class);
+			}
+			return result.toString();// (String) function.call(rhino, scope,
+										// scope, functionParams);
+		} finally {
+			org.mozilla.javascript.Context.exit();
+		}
 	}
 
 	/**

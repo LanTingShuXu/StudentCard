@@ -1,6 +1,9 @@
 package com.swun.hl.studentcard.ui;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -27,6 +30,8 @@ import cn.bmob.v3.update.BmobUpdateAgent;
 import com.swun.hl.studentcard.R;
 import com.swun.hl.studentcard.bmobBean.BmobAccount;
 import com.swun.hl.studentcard.bmobBean.BmobDeclare;
+import com.swun.hl.studentcard.bmobBean.BmobLoginRecord;
+import com.swun.hl.studentcard.bmobBean.BmobSystemStatus;
 import com.swun.hl.studentcard.cache.SharedPreferenceHelper;
 import com.swun.hl.studentcard.client.StudentCardClient;
 import com.swun.hl.studentcard.client.StudentCardClient.CommonCallback;
@@ -35,6 +40,7 @@ import com.swun.hl.studentcard.myview.CustomTopBar.callBackListener;
 import com.swun.hl.studentcard.service.BackService;
 import com.swun.hl.studentcard.utils.AlertDialogHelper;
 import com.swun.hl.studentcard.utils.Anim_BetweenActivity;
+import com.swun.hl.studentcard.utils.PhoneEnvironment;
 
 /**
  * 一卡通登录界面。此界面还有：网络判断，输入合法性判断，等常规判断未完成。-by：何玲，2016.02.26 <br />
@@ -118,7 +124,21 @@ public class LoginActivity extends Activity {
 		ViewGroup parent = (ViewGroup) getWindow().getDecorView();
 		parent.removeViewAt(1);
 		declareViewShowing = false;
+	}
 
+	/**
+	 * 登录按钮的点击事件
+	 * 
+	 * @param v
+	 *            按钮对象
+	 */
+	public void clk_login(View v) {
+		if (checkInput()) {// 检验输入是否合法
+			Button btn = (Button) v;
+			btn.setText("登录中...");
+			btn.setEnabled(false);
+			checkSystemStatus(btn);// 检查系统状态
+		}
 	}
 
 	private void viewFind() {
@@ -247,6 +267,71 @@ public class LoginActivity extends Activity {
 	}
 
 	/**
+	 * 判断用户状态
+	 * 
+	 * @param btn
+	 *            登录按钮
+	 */
+	private void checkUserStatus(final Button btn) {
+		String username = edt_account.getText().toString().trim();
+		BmobQuery<BmobAccount> query = new BmobQuery<BmobAccount>();
+		query.addWhereEqualTo("username", username);
+		query.findObjects(this, new FindListener<BmobAccount>() {
+
+			@Override
+			public void onError(int arg0, String arg1) {
+				playLogin(btn);
+			}
+
+			@Override
+			public void onSuccess(List<BmobAccount> data) {
+				if (data.size() > 0) {
+					if (data.get(0).getStatus() >= 0) {
+						playLogin(btn);
+					} else {
+						showLoginError(btn, null);
+					}
+				} else {
+					playLogin(btn);
+				}
+			}
+		});
+	}
+
+	/**
+	 * 判断系统状态
+	 * 
+	 * @param btn
+	 */
+	private void checkSystemStatus(final Button btn) {
+		BmobQuery<BmobSystemStatus> query = new BmobQuery<BmobSystemStatus>();
+		query.order("-updatedAt");
+		query.findObjects(this, new FindListener<BmobSystemStatus>() {
+
+			@Override
+			public void onError(int arg0, String arg1) {
+				checkUserStatus(btn);
+			}
+
+			@Override
+			public void onSuccess(List<BmobSystemStatus> data) {
+				// 如果有data数据
+				if (data.size() > 0) {
+					BmobSystemStatus status = data.get(0);
+					if (status.getStatus() >= 0) {
+						checkUserStatus(btn);
+					} else {
+						// 如果系统设置为异常状态，那么提示信息
+						showLoginError(btn, status.getInfo());
+					}
+				} else {
+					checkUserStatus(btn);
+				}
+			}
+		});
+	}
+
+	/**
 	 * 发起登录请求
 	 */
 	private void loginRequest(final Button btn) {
@@ -289,10 +374,10 @@ public class LoginActivity extends Activity {
 	 * 判断Bmob账户
 	 */
 	private void checkBmobAccount(String username) {
-		BmobUser bmobUser = BmobUser.getCurrentUser(this);
+		BmobAccount bmobUser = BmobUser.getCurrentUser(this, BmobAccount.class);
 		// 之前登录过。不用再登录
 		if (bmobUser != null && username.equals(bmobUser.getUsername())) {
-
+			loginRecord(bmobUser);
 		}// 需要重新登录
 		else {
 			registorUser(username);
@@ -326,35 +411,71 @@ public class LoginActivity extends Activity {
 	 * 
 	 * @param user
 	 */
-	private void loginBmob(BmobAccount user) {
+	private void loginBmob(final BmobAccount user) {
 		user.login(this, new SaveListener() {
 
 			@Override
 			public void onSuccess() {
+				loginRecord(user);
 
 			}
 
 			@Override
 			public void onFailure(int arg0, String arg1) {
-
+				loginRecord(user);
 			}
 		});
 	}
 
 	/**
-	 * 登录按钮的点击事件
+	 * 记录登录记录
 	 * 
-	 * @param v
-	 *            按钮对象
+	 * @param user
 	 */
-	public void clk_login(View v) {
-		if (checkInput()) {// 检验输入是否合法
-			Button btn = (Button) v;
-			btn.setText("登录中...");
-			btn.setEnabled(false);
-			loginRequest(btn);
-		}
+	private void loginRecord(BmobAccount user) {
+		BmobLoginRecord record = new BmobLoginRecord();
+		record.setAccount(user);
+		record.setLoginTime(getLocaleTime());
+		record.setPhoneFactory(PhoneEnvironment.getPhoneFactory());
+		record.setPhoneFingerPrint(PhoneEnvironment.getFingerPrint());
+		record.setPhoneType(PhoneEnvironment.getPhoneType());
+		record.save(this);
+	}
 
+	// 获取当前时间
+	private String getLocaleTime() {
+		String time = "";
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm",
+				Locale.getDefault());
+		time = dateFormat.format(new Date());
+		return time;
+	}
+
+	/**
+	 * 执行登录操作
+	 * 
+	 * @param btn
+	 *            登录按钮
+	 */
+	private void playLogin(Button btn) {
+		loginRequest(btn);
+	}
+
+	/**
+	 * 显示登录失败信息
+	 * 
+	 * @param btn
+	 * @param content
+	 *            提示信息，如果为空，默认提示：登录失败
+	 */
+	private void showLoginError(Button btn, String content) {
+		String info = "登录失败";
+		if (content != null) {
+			info = content;
+		}
+		AlertDialogHelper.showCommonDialog(this, info);
+		btn.setText("登录");
+		btn.setEnabled(true);
 	}
 
 }
